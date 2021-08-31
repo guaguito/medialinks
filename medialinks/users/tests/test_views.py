@@ -11,11 +11,7 @@ from django.urls import reverse
 from medialinks.users.forms import UserChangeForm
 from medialinks.users.models import User
 from medialinks.users.tests.factories import UserFactory
-from medialinks.users.views import (
-    UserRedirectView,
-    UserUpdateView,
-    user_detail_view,
-)
+from medialinks.users.views import UserRedirectView, UserUpdateView, user_detail_view
 
 pytestmark = pytest.mark.django_db
 
