@@ -87,3 +87,18 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Docker meta for postgres image
+        id: meta-pg
+        uses: docker/metadata-action@v3
+        with:
+          images: guaguito/medialinks-postgres
+
+      - name: Build and push postgres docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./compose/production/postgres/Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta-pg.outputs.tags }}
+          labels: ${{ steps.meta-pg.outputs.labels }}
