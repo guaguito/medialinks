@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  serviceName: postgres-service
+  selector:
+    matchLabels:
+      app: postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: guaguito/medialinks-postgres:main
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+            - name: postgres-data-backups
+              mountPath: /backups
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_DB
+                  name: envs--production--postgres
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_HOST
+                  name: envs--production--postgres
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: envs--production--postgres
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_PORT
+                  name: envs--production--postgres
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_USER
+                  name: envs--production--postgres
+
+
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi
+        storageClassName: do-block-storage
+    - metadata:
+        name: postgres-data-backups
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi
+        storageClassName: do-block-storage
