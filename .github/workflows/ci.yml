@@ -68,7 +68,7 @@ jobs:
 
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: guaguito/medialinks
         
@@ -90,7 +90,7 @@ jobs:
 
       - name: Docker meta for postgres image
         id: meta-pg
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: guaguito/medialinks-postgres
 
