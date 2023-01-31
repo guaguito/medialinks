@@ -80,7 +80,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push django docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           context: .
           file: ./compose/production/django/Dockerfile
@@ -95,7 +95,7 @@ jobs:
           images: guaguito/medialinks-postgres
 
       - name: Build and push postgres docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           context: .
           file: ./compose/production/postgres/Dockerfile
